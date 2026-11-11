@@ -2,7 +2,7 @@ name: Sync Fork with Upstream
 
 on:
   schedule:
-    - cron: '0 * * * *' # Every hour
+    - cron: '0 * * * *'
   workflow_dispatch:
 
 permissions:
@@ -13,15 +13,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout fork
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: main
 
-      - name: Sync with upstream
+      - name: Sync upstream
         run: |
-          git remote add upstream https://github.com/openstack-k8s-operators/glance-operator.git
-          git fetch upstream
-          git checkout main
+          git remote add upstream https://github.com/openstack-k8s-operators/dev-docs.git
+          git fetch upstream main
           git merge upstream/main
           git push origin main
